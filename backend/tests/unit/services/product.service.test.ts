@@ -106,6 +106,8 @@ describe("ProductService", () => {
     });
   });
 
+  // TD: Ajouter un test pour la méthode delete des produits
+
   describe("findLowStock", () => {
     it("should return products where quantity <= minQuantity", async () => {
       const mockProducts = [

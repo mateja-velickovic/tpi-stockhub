@@ -66,6 +66,8 @@ describe("AuthController", () => {
     });
   });
 
+  // TD: Ajouter un test pour la méthode login
+  
   describe("profile", () => {
     it("should return authenticated user from req.user", async () => {
       const mockUser = {

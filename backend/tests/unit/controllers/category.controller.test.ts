@@ -116,6 +116,8 @@ describe("CategoryController", () => {
     });
   });
 
+  // TD: Ajouter un test pour la méthode update des catégories
+
   describe("delete", () => {
     it("should delete category and return 204", async () => {
       mockReq.params = { id: "1" };

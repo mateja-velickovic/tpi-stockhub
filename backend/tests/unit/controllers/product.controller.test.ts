@@ -72,6 +72,8 @@ describe("ProductController", () => {
     });
   });
 
+  // TD: Ajouter un test pour la méthode create des produits
+
   describe("update", () => {
     it("should update and return product", async () => {
       const updated = { id: 1, name: "Updated Laptop", sku: "ELEC-001" };
@@ -105,6 +107,8 @@ describe("ProductController", () => {
       expect(mockNext).toHaveBeenCalledWith(error);
     });
   });
+
+  // TD: Ajouter un test pour la méthode delete des produits
 
   describe("getLowStock", () => {
     it("should return low stock products", async () => {
