@@ -170,4 +170,4 @@ describe("API Service", () => {
     expect(mockState.mockPut).toHaveBeenCalledWith("/categories/2", payload);
     expect(mockState.mockDelete).toHaveBeenCalledWith("/categories/2");
   });
-
+});
