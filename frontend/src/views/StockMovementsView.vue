@@ -158,13 +158,24 @@ import { ref, reactive, computed, onMounted } from 'vue';
 import StockMovementRow from '@/components/stock/StockMovementRow.vue';
 import { useStockMovementStore } from '@/stores/stockMovement.store';
 import { useProductStore } from '@/stores/product.store';
+import { useAuthStore } from '@/stores/auth.store';
+import type { StockMovement } from '@/types';
 
 const movementStore = useStockMovementStore();
 const productStore = useProductStore();
+const authStore = useAuthStore();
 
-const movements = computed(() => movementStore.movements);
 const products = computed(() => productStore.products);
 const loading = computed(() => movementStore.loading);
+const movements = computed<StockMovement[]>(() => {
+  const productById = new Map(products.value.map(product => [product.id, product]));
+  const currentUser = authStore.user;
+  return movementStore.movements.map(movement => ({
+    ...movement,
+    product: movement.product ?? productById.get(movement.productId),
+    user: movement.user ?? (movement.userId === currentUser?.id ? currentUser : undefined),
+  }));
+});
 
 const showForm = ref(false);
 const form = reactive({
