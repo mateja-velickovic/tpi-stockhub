@@ -25,10 +25,10 @@
     <div class="mt-4 flex items-center justify-between">
       <span class="text-lg font-bold text-gray-900">CHF {{ Number(product.price).toFixed(2) }}</span>
       <span
-        v-if="product.category"
+        v-if="categoryName"
         class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded"
       >
-        {{ product.category.name }}
+        {{ categoryName }}
       </span>
     </div>
     <div class="mt-4 flex gap-2">
@@ -52,9 +52,17 @@
 import { computed } from 'vue';
 import type { Product } from '@/types';
 import AlertBadge from '@/components/ui/AlertBadge.vue';
+import { useCategoryStore } from '@/stores/category.store';
 
 const props = defineProps<{ product: Product }>();
 defineEmits(['edit', 'delete']);
+
+const categoryStore = useCategoryStore();
+
+const categoryName = computed(() => {
+  const category = categoryStore.categories.find(c => c.id === props.product.categoryId);
+  return category?.name || props.product.category?.name || '';
+});
 
 const stockVariant = computed(() => {
   if (props.product.quantity <= 0) return 'danger';
