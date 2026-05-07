@@ -14,6 +14,9 @@ const mocks = vi.hoisted(() => ({
     products: [] as Product[],
     fetchAll: vi.fn(),
   },
+  authStore: {
+    user: { id: 1 },
+  },
 }));
 
 vi.mock('../../../src/stores/stockMovement.store', () => ({
@@ -22,6 +25,10 @@ vi.mock('../../../src/stores/stockMovement.store', () => ({
 
 vi.mock('../../../src/stores/product.store', () => ({
   useProductStore: () => mocks.productStore,
+}));
+
+vi.mock('../../../src/stores/auth.store', () => ({
+  useAuthStore: () => mocks.authStore,
 }));
 
 describe('StockMovementsView', () => {
