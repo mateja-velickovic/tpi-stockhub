@@ -1,6 +1,12 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import ProductCard from '../../../src/components/products/ProductCard.vue';
+
+vi.mock('@/stores/category.store', () => ({
+  useCategoryStore: () => ({
+    categories: [],
+  }),
+}));
 
 describe('ProductCard', () => {
   const mockProduct = {
@@ -20,6 +26,11 @@ describe('ProductCard', () => {
   it('should display product name', () => {
     const wrapper = mount(ProductCard, {
       props: { product: mockProduct },
+      global: {
+        stubs: {
+          AlertBadge: { template: '<span><slot /></span>' },
+        },
+      },
     });
 
     const nameEl = wrapper.find('h3');
@@ -29,6 +40,11 @@ describe('ProductCard', () => {
   it('should display SKU', () => {
     const wrapper = mount(ProductCard, {
       props: { product: mockProduct },
+      global: {
+        stubs: {
+          AlertBadge: { template: '<span><slot /></span>' },
+        },
+      },
     });
 
     expect(wrapper.text()).toContain('ELEC-001');
@@ -37,6 +53,11 @@ describe('ProductCard', () => {
   it('should emit delete event', async () => {
     const wrapper = mount(ProductCard, {
       props: { product: mockProduct },
+      global: {
+        stubs: {
+          AlertBadge: { template: '<span><slot /></span>' },
+        },
+      },
     });
 
     const deleteBtn = wrapper.findAll('button')[1];
