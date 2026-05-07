@@ -1,0 +1,40 @@
+name: StockHub | CI Workflow
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+  
+jobs:
+  backend:
+    name: Backend CI Workflow
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Node installation
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          cache-dependency-path: backend/package-lock.json
+        
+      - name: Setup Backend
+        run: cd backend && npm ci --prefer-offline
+
+      - name: Packages Audit
+        run: cd backend && npm audit --audit-level=critical
+
+      - name: Run Backend Tests
+        run: cd backend && npm run test:coverage
+
+      - name: Lint Backend Code
+        run: cd backend && npm run lint
+      
+      - name: Type Check Backend Code
+        run: cd backend && npm run typecheck
+
+      - name : Build Backend
+        run: cd backend && npm run build
