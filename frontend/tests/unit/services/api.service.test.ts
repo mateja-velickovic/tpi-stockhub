@@ -170,4 +170,16 @@ describe("API Service", () => {
     expect(mockState.mockPut).toHaveBeenCalledWith("/categories/2", payload);
     expect(mockState.mockDelete).toHaveBeenCalledWith("/categories/2");
   });
+
+  it("calls all stock movement endpoints", async () => {
+    const payload = { productId: 1, type: "IN", quantity: 3, reason: "Restock" };
+
+    await stockMovementApi.getAll();
+    await stockMovementApi.getByProductId(1);
+    await stockMovementApi.create(payload);
+
+    expect(mockState.mockGet).toHaveBeenCalledWith("/stock-movements");
+    expect(mockState.mockGet).toHaveBeenCalledWith("/stock-movements/product/1");
+    expect(mockState.mockPost).toHaveBeenCalledWith("/stock-movements", payload);
+  });
 });
