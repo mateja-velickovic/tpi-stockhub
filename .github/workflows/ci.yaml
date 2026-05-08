@@ -10,7 +10,9 @@ jobs:
     name: Backend CI Workflow
 
     runs-on: ubuntu-latest
-    working-directory: ./backend
+    defaults:
+      run:
+        working-directory: ./backend
 
     steps:
       - name: Checkout Code
@@ -41,35 +43,37 @@ jobs:
         run: npm run build
 
   frontend:
-      name: Frontend CI Workflow
+    name: Frontend CI Workflow
 
-      runs-on: ubuntu-latest
-      working-directory: ./frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
 
-      steps:
-        - name: Checkout Code
-          uses: actions/checkout@v4
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-        - name: Node installation
-          uses: actions/setup-node@v4
-          with:
-            cache: "npm"
-            cache-dependency-path: frontend/package-lock.json
-          
-        - name: Setup Frontend
-          run: npm ci --prefer-offline
-
-        - name: Packages Audit
-          run: npm audit --audit-level=critical
-
-        - name: Run Frontend Tests
-          run: npm run test:coverage
-
-        - name: Lint Frontend Code
-          run: npm run lint
+      - name: Node installation
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
         
-        - name: Type Check Frontend Code
-          run: npm run typecheck
+      - name: Setup Frontend
+        run: npm ci --prefer-offline
 
-        - name : Build Frontend
-          run: npm run build
+      - name: Packages Audit
+        run: npm audit --audit-level=critical
+
+      - name: Run Frontend Tests
+        run: npm run test:coverage
+
+      - name: Lint Frontend Code
+        run: npm run lint
+      
+      - name: Type Check Frontend Code
+        run: npm run typecheck
+
+      - name : Build Frontend
+        run: npm run build
