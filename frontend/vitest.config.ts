@@ -16,7 +16,7 @@ export default defineConfig({
     include: ['tests/**/*.test.ts'],
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'lcov', 'html'],
+      reporter: ['text', 'lcov', 'html', 'cobertura'],
       reportsDirectory: './coverage',
       include: ['src/**/*.{ts,vue}'],
       exclude: ['src/main.ts'],

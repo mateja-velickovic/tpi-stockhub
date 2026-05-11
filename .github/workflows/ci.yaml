@@ -106,9 +106,6 @@ jobs:
           output: both
           indicators: true
 
-      - name: check files
-        run: ls -al && cd .. && ls -al
-
       - name: Publish coverage in job summary
         run: cat ../code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
