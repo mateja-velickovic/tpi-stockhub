@@ -12,7 +12,7 @@ const config: Config = {
     '!src/seed.ts',
   ],
   coverageDirectory: 'coverage',
-  coverageReporters: ['text', 'lcov', 'html'],
+  coverageReporters: ['text', 'lcov', 'html', 'cobertura'],
 };
 
 export default config;
