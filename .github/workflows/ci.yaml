@@ -36,7 +36,7 @@ jobs:
       - name: Build coverage summary
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          filename: coverage/cobertura-coverage.xml
+          filename: backend/coverage/cobertura-coverage.xml
           badge: true
           format: markdown
           output: both
@@ -50,14 +50,14 @@ jobs:
         with:
           name: backend-coverage-report
           path: |
-            coverage/
-            coverage/cobertura-coverage.xml
+            backend/coverage/
+            backend/coverage/cobertura-coverage.xml
           if-no-files-found: error
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
-          filename: coverage/cobertura-coverage.xml
+          filename: backend/coverage/cobertura-coverage.xml
           flags: backend
           token: ${{ secrets.CODECOV_TOKEN }}
 
