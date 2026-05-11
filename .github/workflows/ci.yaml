@@ -45,6 +45,9 @@ jobs:
       - name: List workspace files
         run: ls -la
 
+      - name: List workspace files
+        run: cd .. && ls -la
+
       - name: Publish coverage in job summary
         run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
