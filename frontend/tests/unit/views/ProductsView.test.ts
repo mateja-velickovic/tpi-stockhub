@@ -61,6 +61,28 @@ describe("ProductsView", () => {
   });
 
   // (TD: Ajouter un test pour la création d'un produit quand aucun produit n'est passé en mode édition)
+  it("creates a new product from form submission", async () => {
+    const wrapper = mount(ProductsView, {
+      global: {
+        stubs: {
+          ProductCard: { template: "<div />", props: ["product"] },
+          ProductForm: {
+            template:
+              "<button data-testid=\"submit-create\" @click=\"$emit('submit', { name: 'New Product' })\" />",
+            props: ["product"],
+          },
+        },
+      },
+    });
+
+    await wrapper.get("button").trigger("click");
+    await wrapper.get('[data-testid="submit-create"]').trigger("click");
+    await flushPromises();
+
+    expect(mocks.store.createProduct).toHaveBeenCalledWith({
+      name: "New Product",
+    });
+  });
 
   it("updates and deletes product from card actions", async () => {
     const wrapper = mount(ProductsView, {
