@@ -60,7 +60,6 @@ describe("ProductsView", () => {
     expect(mocks.store.fetchAll).toHaveBeenCalledOnce();
   });
 
-  // (TD: Ajouter un test pour la création d'un produit quand aucun produit n'est passé en mode édition)
   it("creates a new product from form submission", async () => {
     const wrapper = mount(ProductsView, {
       global: {
