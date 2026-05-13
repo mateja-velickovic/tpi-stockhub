@@ -106,7 +106,25 @@ describe("ProductService", () => {
     });
   });
 
-  // TD: Ajouter un test pour la méthode delete des produits
+  describe("delete", () => {
+    it("should delete a product by id", async () => {
+      const mockProduct = {
+        id: 1,
+        destroy: jest.fn().mockResolvedValue(undefined),
+      };
+      (Product.findByPk as jest.Mock).mockResolvedValue(mockProduct);
+
+      await service.delete(1);
+
+      expect(mockProduct.destroy).toHaveBeenCalled();
+    });
+
+    it("should throw if product not found", async () => {
+      (Product.findByPk as jest.Mock).mockResolvedValue(null);
+
+      await expect(service.delete(999)).rejects.toThrow("Product not found");
+    });
+  });
 
   describe("findLowStock", () => {
     it("should return products where quantity <= minQuantity", async () => {
