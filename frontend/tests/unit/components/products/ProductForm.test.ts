@@ -37,6 +37,35 @@ describe('ProductForm', () => {
     expect(mocks.store.fetchAll).not.toHaveBeenCalled();
   });
 
+  it('submits create payload from form inputs', async () => {
+    mocks.store.categories = [{ id: 1, name: 'Electronics' }];
+
+    const wrapper = mount(ProductForm);
+
+    await flushPromises();
+
+    const inputs = wrapper.findAll('input');
+    await inputs[0].setValue('Chair');
+    await inputs[1].setValue('CHR-1');
+    await inputs[2].setValue('12.5');
+    await wrapper.find('textarea').setValue('Comfortable');
+    await wrapper.find('select').setValue('1');
+    await inputs[3].setValue('7');
+
+    await wrapper.find('form').trigger('submit.prevent');
+
+    const submitted = wrapper.emitted('submit');
+    expect(submitted).toBeTruthy();
+    expect(submitted?.[0]?.[0]).toEqual({
+      name: 'Chair',
+      sku: 'CHR-1',
+      description: 'Comfortable',
+      price: 12.5,
+      categoryId: 1,
+      minQuantity: 7,
+    });
+  });
+
   it('prefills form fields in edit mode and emits submit payload', async () => {
     mocks.store.categories = [{ id: 2, name: 'Office' }];
 
@@ -58,6 +87,9 @@ describe('ProductForm', () => {
     });
 
     await flushPromises();
+
+    expect(wrapper.text()).toContain('Modifier le produit');
+    expect(wrapper.find('button[type="submit"]').text()).toContain('Mettre');
 
     const inputs = wrapper.findAll('input');
     expect((inputs[0].element as HTMLInputElement).value).toBe('Desk Lamp');
