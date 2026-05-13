@@ -151,7 +151,36 @@ describe("ProductController", () => {
   });
 
   // TD: Ajouter un test pour la méthode delete des produits
+    describe("delete", () => {
+    it("should delete product and return 204", async () => {
+      mockReq.params = { id: "1" };
+      (productService.delete as jest.Mock).mockResolvedValue(undefined);
 
+      await controller.delete(
+        mockReq as Request,
+        mockRes as Response,
+        mockNext,
+      );
+
+      expect(productService.delete).toHaveBeenCalledWith(1);
+      expect(mockRes.status).toHaveBeenCalledWith(204);
+      expect(mockRes.send).toHaveBeenCalled();
+    });
+
+    it("should call next when product not found", async () => {
+      mockReq.params = { id: "999" };
+      const error = new Error("Product not found");
+      (productService.delete as jest.Mock).mockRejectedValue(error);
+
+      await controller.delete(
+        mockReq as Request,
+        mockRes as Response,
+        mockNext,
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(error);
+    });
+  });
 
   describe("getLowStock", () => {
     it("should return low stock products", async () => {
