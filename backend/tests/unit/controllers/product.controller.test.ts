@@ -72,7 +72,49 @@ describe("ProductController", () => {
     });
   });
 
-  // TD: Ajouter un test pour la méthode create des produits
+  describe("create", () => {
+    it("should create and return new product", async () => {
+      const newProduct = {
+        name: "New Product",
+        sku: "NEW-001",
+        price: 49.99,
+        categoryId: 1,
+      };
+      const createdProduct = { id: 1, ...newProduct };
+      mockReq.body = newProduct;
+
+      (productService.create as jest.Mock).mockResolvedValue(createdProduct);
+
+      await controller.create(
+        mockReq as Request,
+        mockRes as Response,
+        mockNext,
+      );
+
+      expect(productService.create).toHaveBeenCalledWith(newProduct);
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.json).toHaveBeenCalledWith({ data: createdProduct });
+    });
+
+    it("should call next on error", async () => {
+      const error = new Error("DB error");
+      mockReq.body = {
+        name: "New Product",
+        sku: "NEW-001",
+        price: 49.99,
+        categoryId: 1,
+      };
+      (productService.create as jest.Mock).mockRejectedValue(error);
+
+      await controller.create(
+        mockReq as Request,
+        mockRes as Response,
+        mockNext,
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(error);
+    });
+  });
 
   describe("update", () => {
     it("should update and return product", async () => {
@@ -109,6 +151,7 @@ describe("ProductController", () => {
   });
 
   // TD: Ajouter un test pour la méthode delete des produits
+
 
   describe("getLowStock", () => {
     it("should return low stock products", async () => {
