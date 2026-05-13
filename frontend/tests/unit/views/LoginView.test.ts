@@ -21,6 +21,8 @@ describe("LoginView", () => {
     mocks.login.mockReset();
   });
 
+  // TD: Ajouter un test pour valider le login et la redirection
+
   it("shows backend error message on login failure", async () => {
     mocks.login.mockRejectedValue({
       response: { data: { error: "Identifiants invalides" } },

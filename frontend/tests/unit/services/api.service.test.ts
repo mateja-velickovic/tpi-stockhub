@@ -182,4 +182,6 @@ describe("API Service", () => {
     expect(mockState.mockGet).toHaveBeenCalledWith("/stock-movements/product/1");
     expect(mockState.mockPost).toHaveBeenCalledWith("/stock-movements", payload);
   });
+
+  // TD: Ajouter des tests pour les mouvements de stock
 });

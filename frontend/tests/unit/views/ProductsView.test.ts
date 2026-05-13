@@ -60,6 +60,8 @@ describe("ProductsView", () => {
     expect(mocks.store.fetchAll).toHaveBeenCalledOnce();
   });
 
+  // (TD: Ajouter un test pour la création d'un produit quand aucun produit n'est passé en mode édition)
+
   it("updates and deletes product from card actions", async () => {
     const wrapper = mount(ProductsView, {
       global: {

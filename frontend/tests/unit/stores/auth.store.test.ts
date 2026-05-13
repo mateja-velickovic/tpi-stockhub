@@ -38,6 +38,8 @@ describe("Auth Store", () => {
     expect(store.token).toBe("fake-jwt-token");
   });
 
+  // TD: Ajouter un test pour la fonction logout
+
   it("should fetch and store profile data", async () => {
     const profileResponse = {
       data: {
