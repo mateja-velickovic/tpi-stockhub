@@ -66,7 +66,6 @@ describe("AuthController", () => {
     });
   });
 
-  // TD: Ajouter un test pour la méthode login
   describe("login", () => {
     it("should log in a user", async () => {
       const credentials = {
