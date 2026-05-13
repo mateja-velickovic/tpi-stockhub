@@ -38,7 +38,16 @@ describe("Auth Store", () => {
     expect(store.token).toBe("fake-jwt-token");
   });
 
-  // TD: Ajouter un test pour la fonction logout
+  it("should logout and clear user data", async () => {
+    const store = useAuthStore();
+    store.user = { id: 1, username: "admin", email: "admin@stockhub.ch", role: "admin" };
+    store.token = "fake-jwt-token";
+
+    await store.logout();
+
+    expect(store.user).toBeNull();
+    expect(store.token).toBeNull();
+  });
 
   it("should fetch and store profile data", async () => {
     const profileResponse = {
