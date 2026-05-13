@@ -67,7 +67,30 @@ describe("AuthController", () => {
   });
 
   // TD: Ajouter un test pour la méthode login
-  
+  describe("login", () => {
+    it("should log in a user", async () => {
+      const credentials = {
+        email: "test@test.ch",
+        password: "password123",
+      };
+      const mockResult = {
+        user: { id: 1, username: "testuser", email: "test@test.ch", role: "manager" },
+        token: "fake-token",
+      };
+
+      mockReq.body = credentials;
+      (authService.login as jest.Mock).mockResolvedValue(mockResult);
+
+      await controller.login(
+        mockReq as Request,
+        mockRes as Response,
+        mockNext,
+      );
+
+      expect(mockRes.json).toHaveBeenCalledWith(mockResult);
+    });
+  });
+
   describe("profile", () => {
     it("should return authenticated user from req.user", async () => {
       const mockUser = {
