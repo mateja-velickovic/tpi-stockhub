@@ -116,7 +116,39 @@ describe("CategoryController", () => {
     });
   });
 
-  // TD: Ajouter un test pour la méthode update des catégories
+  describe("update", () => {
+    it("should update category and return updated category", async () => {
+      const updatedData = { name: "Updated Category", description: "desc" };
+      const updatedCategory = { id: 1, ...updatedData };
+      mockReq.params = { id: "1" };
+      mockReq.body = updatedData;
+      (categoryService.update as jest.Mock).mockResolvedValue(updatedCategory);
+
+      await controller.update(
+        mockReq as Request,
+        mockRes as Response,
+        mockNext,
+      );
+
+      expect(categoryService.update).toHaveBeenCalledWith(1, updatedData);
+      expect(mockRes.json).toHaveBeenCalledWith({ data: updatedCategory });
+    });
+    
+    it("should call next on duplicate name during update", async () => {
+      mockReq.params = { id: "1" };
+      mockReq.body = { name: "Electronics" };
+      const error = new Error("Category name already exists");
+      (categoryService.update as jest.Mock).mockRejectedValue(error);
+
+      await controller.update(
+        mockReq as Request,
+        mockRes as Response,
+        mockNext,
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(error);
+    });
+  });
 
   describe("delete", () => {
     it("should delete category and return 204", async () => {
