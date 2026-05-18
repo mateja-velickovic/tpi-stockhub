@@ -92,3 +92,13 @@ jobs:
           username: "${{ secrets.VPN_USERNAME }}"
           password: "${{ secrets.VPN_PASSWORD }}"
           ping_host: ${{ secrets.STAGING_HOST }}
+
+      - name: Sending files to the staging server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.STAGING_HOST }}
+          username: ${{ secrets.SSH_STAGING_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "./docker-compose.yaml,./docker-compose.staging.yaml"
+          target: ~/tpi-stockhub/
+          port: ${{ secrets.SSH_STAGING_PORT }}
