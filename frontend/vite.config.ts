@@ -10,7 +10,7 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
-  server: {
+  preview: {
     port: parseInt(process.env.VITE_DEV_PORT || '5173'),
     proxy: {
       '/api': {
