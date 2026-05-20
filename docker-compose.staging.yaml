@@ -1,7 +1,13 @@
 services:
+  database:
+    environment:
+      MYSQL_PASSWORD: ${DB_STAGING_PASSWORD}
+
   api:
     image: ghcr.io/mateja-velickovic/stockhub-backend:${IMAGE_VERSION}
     build : null
+    environment:
+      DB_PASSWORD: ${DB_STAGING_PASSWORD}
 
   web:
     image: ghcr.io/mateja-velickovic/stockhub-frontend:${IMAGE_VERSION}
