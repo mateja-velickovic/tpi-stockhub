@@ -108,13 +108,13 @@ jobs:
             # docker compose -f docker-compose.yaml -f docker-compose.staging.yaml up -d
 
       - name: Sending files to the production server
-        uses: appleboy/scp-action@v1
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.PRODUCTION_HOST }}
           username: ${{ secrets.SSH_PRODUCTION_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PRODUCTION_PORT }}
-          source: "./docker-compose.yaml"
+          source: "./docker-compose.yaml,./docker-compose.staging.yaml"
           target: ~/prod-stockhub/
+          port: ${{ secrets.SSH_PRODUCTION_PORT }}
 
   # Ajouter le nettoyage des images inutilisées sur la machine distante
