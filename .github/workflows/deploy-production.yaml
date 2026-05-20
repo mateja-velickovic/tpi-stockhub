@@ -95,8 +95,11 @@ jobs:
           host: ${{ secrets.PRODUCTION_HOST }}
           username: ${{ secrets.SSH_PRODUCTION_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./docker-compose.yaml,./docker-compose.staging.yaml,./docker-compose.prod.yaml"
-          target: ~/prod-stockhub
+          source: |
+            docker-compose.yaml
+            docker-compose.staging.yaml
+            docker-compose.prod.yaml
+          target: /home/${{ secrets.SSH_PRODUCTION_USERNAME }}/prod-stockhub
           port: ${{ secrets.SSH_PRODUCTION_PORT }}
 
       - name: Building the containers on the production server
@@ -108,7 +111,7 @@ jobs:
           port: ${{ secrets.SSH_PRODUCTION_PORT }}
           # Récupération des images, arrêt des conteneurs, puis redémarrage avec les nouvelles images
           # Seed de la base de données - docker compose exec api node dist/seed.js
-          script: ls
+          script: |
             cd ~/prod-stockhub/
 
             export IMAGE_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.image_version || github.sha }}
