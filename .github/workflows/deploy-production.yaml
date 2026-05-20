@@ -95,10 +95,7 @@ jobs:
           host: ${{ secrets.PRODUCTION_HOST }}
           username: ${{ secrets.SSH_PRODUCTION_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: |
-            docker-compose.yaml
-            docker-compose.staging.yaml
-            docker-compose.prod.yaml
+          source: "docker-compose*.yaml"
           target: /home/${{ secrets.SSH_PRODUCTION_USERNAME }}/prod-stockhub
           port: ${{ secrets.SSH_PRODUCTION_PORT }}
 
