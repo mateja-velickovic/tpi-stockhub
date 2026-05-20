@@ -89,24 +89,6 @@ jobs:
       - name: Cloning the repository
         uses: actions/checkout@v4
 
-      - name: Building the containers on the production server
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.PRODUCTION_HOST }}
-          username: ${{ secrets.SSH_PRODUCTION_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PRODUCTION_PORT }}
-          script: ls
-          # Récupération des images, arrêt des conteneurs, puis redémarrage avec les nouvelles images
-          # Seed de la base de données - docker compose exec api node dist/seed.js
-          # script: ls
-            # cd ~/prod-stockhub/
-
-            # export IMAGE_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.image_version || github.sha }}
-            # docker compose -f docker-compose.yaml -f docker-compose.staging.yaml -f docker-compose.prod.yaml down
-            # docker compose -f docker-compose.yaml -f docker-compose.staging.yaml -f docker-compose.prod.yaml pull
-            # docker compose -f docker-compose.yaml -f docker-compose.staging.yaml -f docker-compose.prod.yaml up -d
-
       - name: Sending files to the production server
         uses: appleboy/scp-action@v0.1.3
         with:
@@ -114,7 +96,25 @@ jobs:
           username: ${{ secrets.SSH_PRODUCTION_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "./docker-compose.yaml,./docker-compose.staging.yaml,./docker-compose.prod.yaml"
-          target: ~/prod-stockhub/
+          target: ~/prod-stockhub
           port: ${{ secrets.SSH_PRODUCTION_PORT }}
+
+      - name: Building the containers on the production server
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.PRODUCTION_HOST }}
+          username: ${{ secrets.SSH_PRODUCTION_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PRODUCTION_PORT }}
+          script: 
+          # Récupération des images, arrêt des conteneurs, puis redémarrage avec les nouvelles images
+          # Seed de la base de données - docker compose exec api node dist/seed.js
+          script: ls
+            cd ~/prod-stockhub/
+
+            export IMAGE_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.image_version || github.sha }}
+            docker compose -f docker-compose.yaml -f docker-compose.staging.yaml -f docker-compose.prod.yaml down
+            docker compose -f docker-compose.yaml -f docker-compose.staging.yaml -f docker-compose.prod.yaml pull
+            docker compose -f docker-compose.yaml -f docker-compose.staging.yaml -f docker-compose.prod.yaml up -d
 
   # Ajouter le nettoyage des images inutilisées sur la machine distante
