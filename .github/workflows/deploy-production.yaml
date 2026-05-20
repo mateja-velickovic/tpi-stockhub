@@ -94,8 +94,6 @@ jobs:
       - name: Cloning the repository
         uses: actions/checkout@v4
 
-
-
       - name: Building the containers on the production server
         uses: appleboy/ssh-action@v0.1.7
         with:
@@ -103,15 +101,16 @@ jobs:
           username: ${{ secrets.SSH_PRODUCTION_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PRODUCTION_PORT }}
+          script: ls
           # Récupération des images, arrêt des conteneurs, puis redémarrage avec les nouvelles images
           # Seed de la base de données - docker compose exec api node dist/seed.js
-          # script: |
-          #   cd ~/prod-stockhub/
+          # script: ls
+            # cd ~/prod-stockhub/
 
-          #   export IMAGE_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.image_version || github.sha }}
-          #   docker compose -f docker-compose.yaml -f docker-compose.staging.yaml down
-          #   docker compose -f docker-compose.yaml -f docker-compose.staging.yaml pull
-          #   docker compose -f docker-compose.yaml -f docker-compose.staging.yaml up -d
+            # export IMAGE_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.image_version || github.sha }}
+            # docker compose -f docker-compose.yaml -f docker-compose.staging.yaml down
+            # docker compose -f docker-compose.yaml -f docker-compose.staging.yaml pull
+            # docker compose -f docker-compose.yaml -f docker-compose.staging.yaml up -d
 
       - name: Sending files to the production server
         uses: appleboy/scp-action@v0.1.7
@@ -119,7 +118,7 @@ jobs:
           host: ${{ secrets.PRODUCTION_HOST }}
           username: ${{ secrets.SSH_PRODUCTION_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./docker-compose.yaml,./docker-compose.staging.yaml"
+          source: "docker-compose.yaml"
           target: ~/prod-stockhub/
           port: ${{ secrets.SSH_PRODUCTION_PORT }}
   # Ajouter le nettoyage des images inutilisées sur la machine distante
