@@ -113,7 +113,7 @@ jobs:
           # Récupération des images, arrêt des conteneurs, puis redémarrage avec les nouvelles images
           # Seed de la base de données - docker compose exec api node dist/seed.js
           script: |
-            cd ~/tpi-stockhub/
+            cd ~/staging-stockhub/
 
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml down
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml pull
