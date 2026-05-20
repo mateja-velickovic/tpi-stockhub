@@ -51,8 +51,7 @@ runs:
             ${{ inputs.host }}:${{ inputs.port }} \
             --passwd-on-stdin \
             --background \
-            --no-dtls \
-            --quiet
+            --no-dtls
         sleep 7
         echo "VPN Started"
 
