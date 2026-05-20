@@ -84,21 +84,14 @@ jobs:
       - name: Cloning the repository
         uses: actions/checkout@v4
 
-      # - name: Setup VPN
-      #   uses: ./.github/actions/vpn
-      #   with:
-      #     host: "${{ secrets.VPN_IP }}"
-      #     port: "443"
-      #     username: "${{ secrets.VPN_USERNAME }}"
-      #     password: "${{ secrets.VPN_PASSWORD }}"
-      #     ping_host: ${{ secrets.STAGING_HOST }}
-
-      - name: Connect to FortiClient VPN
-        uses: horellana/openconnect@v1.0.1
+      - name: Setup VPN
+        uses: ./.github/actions/vpn
         with:
-          host: ${{ secrets.VPN_IP }}
-          user: ${{ secrets.VPN_USERNAME }}
-          password: ${{ secrets.VPN_PASSWORD }}
+          host: "${{ secrets.VPN_IP }}"
+          port: "443"
+          username: "${{ secrets.VPN_USERNAME }}"
+          password: "${{ secrets.VPN_PASSWORD }}"
+          ping_host: ${{ secrets.STAGING_HOST }}
 
       - name: Sending files to the staging server
         uses: appleboy/scp-action@v0.1.7
