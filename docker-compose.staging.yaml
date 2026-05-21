@@ -2,11 +2,11 @@ services:
   database:
 
   api:
-    image: ghcr.io/mateja-velickovic/stockhub-backend:1.2
+    image: ghcr.io/mateja-velickovic/stockhub-backend:${BACKEND_VERSION}
     build : null
 
   web:
-    image: ghcr.io/mateja-velickovic/stockhub-frontend:1.2
+    image: ghcr.io/mateja-velickovic/stockhub-frontend:${FRONTEND_VERSION}
     build : null
     ports: []
 

@@ -4,11 +4,11 @@ services:
     #   MYSQL_PASSWORD: ${DB_PROD_PASSWORD}
 
   api:
-    image: ghcr.io/mateja-velickovic/stockhub-backend:${IMAGE_VERSION}
+    image: ghcr.io/mateja-velickovic/stockhub-backend:${BACKEND_VERSION}
     build : null
     # environment:
     #   DB_PASSWORD: ${DB_PROD_PASSWORD}
 
   web:
-    image: ghcr.io/mateja-velickovic/stockhub-frontend:${IMAGE_VERSION}
+    image: ghcr.io/mateja-velickovic/stockhub-frontend:${FRONTEND_VERSION}
     build : null
