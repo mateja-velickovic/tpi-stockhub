@@ -20,6 +20,28 @@ export default defineConfig({
     },
   },
   server: {
+    host: true,
     port: parseInt(process.env.VITE_DEV_PORT || '5173'),
+    allowedHosts: ["172.26.1.65", "staging-stockhub.pm2etml.ch"],
   },
 });
+
+// export default defineConfig({
+//   // ...
+//   preview: {
+//     host: true,
+//     port: parseInt(process.env.VITE_DEV_PORT || '5173'),
+//     allowedHosts: ["172.26.1.65", "staging-stockhub.pm2etml.ch"],
+//     proxy: {
+//       '/api': {
+//         target: process.env.VITE_API_PROXY_TARGET || 'http://localhost:3000',
+//         changeOrigin: true,
+//       },
+//     },
+//   },
+//   server: {
+//     host: true,
+//     port: parseInt(process.env.VITE_DEV_PORT || '5173'),
+//     allowedHosts: ["172.26.1.65", "staging-stockhub.pm2etml.ch"],
+//   },
+// });
