@@ -6,7 +6,11 @@ on:
     types: [completed]
   workflow_dispatch:
     inputs:
-      image_version:
+      backend_version:
+        description: "Indiquer la version des images (par défaut : commit SHA)"
+        required: true
+        type: string
+      frontend_version:
         description: "Indiquer la version des images (par défaut : commit SHA)"
         required: true
         type: string
@@ -24,7 +28,7 @@ jobs:
 
     steps:
       - name: Set image version
-        run: echo "IMAGE_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.image_version || github.sha }}" >> $GITHUB_ENV
+        run: echo "IMAGE_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.backend_version || github.sha }}" >> $GITHUB_ENV
 
       - name: Cloning the repository
         uses: actions/checkout@v4
@@ -59,7 +63,7 @@ jobs:
 
     steps:
       - name: Set image version
-        run: echo "IMAGE_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.image_version || github.sha }}" >> $GITHUB_ENV
+        run: echo "IMAGE_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.frontend_version || github.sha }}" >> $GITHUB_ENV
         
       - name: Cloning the repository
         uses: actions/checkout@v4
@@ -129,8 +133,10 @@ jobs:
             rm *.tar.gz
             cd ~/staging-stockhub/
 
-            export IMAGE_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.image_version || github.sha }}
-            
+            export BACKEND_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.backend_version || github.sha }}
+            export FRONTEND_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.frontend_version || github.sha }}
+
+
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml down
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml pull
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml up -d
