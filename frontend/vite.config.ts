@@ -22,6 +22,6 @@ export default defineConfig({
   server: {
     host: true,
     port: parseInt(process.env.VITE_DEV_PORT || '5173'),
-    allowedHosts: ["172.26.1.65", "staging-stockhub.pm2etml.ch"],
+    allowedHosts: ["172.26.1.65", "staging-stockhub.pm2etml.ch", "stockhub.pm2etml.ch"],
   },
 });
