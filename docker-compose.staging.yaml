@@ -1,14 +1,30 @@
 services:
   database:
-    # environment:
-    #   MYSQL_PASSWORD: ${DB_STAGING_PASSWORD}
 
   api:
-    image: ghcr.io/mateja-velickovic/stockhub-backend:latest
+    image: ghcr.io/mateja-velickovic/stockhub-backend:1.2
     build : null
-    # environment:
-    #   DB_PASSWORD: ${DB_STAGING_PASSWORD}
 
   web:
-    image: ghcr.io/mateja-velickovic/stockhub-frontend:latest
+    image: ghcr.io/mateja-velickovic/stockhub-frontend:1.2
     build : null
+    ports: []
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+    networks:
+      - frontend_network
+
+volumes:
+  caddy_data:
+  caddy_config:
