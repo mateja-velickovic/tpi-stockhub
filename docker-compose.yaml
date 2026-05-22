@@ -50,7 +50,7 @@ services:
     restart: unless-stopped
     hostname: web
     ports:
-      - "5173:5173"
+      - "127.0.0.1:5173:5173"
     environment:
       VITE_API_PROXY_TARGET: http://api:3000
     depends_on:
