@@ -14,7 +14,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./deploy/Caddyfile:/etc/caddy/Caddyfile
+      - ./deploy/staging/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
