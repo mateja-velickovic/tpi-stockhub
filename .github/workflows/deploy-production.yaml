@@ -99,7 +99,7 @@ jobs:
           host: ${{ secrets.PRODUCTION_HOST }}
           username: ${{ secrets.SSH_PRODUCTION_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./deploy/prod/*,./docker-compose.*"
+          source: "./deploy/prod/Caddyfile,./docker-compose.*"
           target: /home/${{ secrets.SSH_PRODUCTION_USERNAME }}/prod-stockhub
           port: ${{ secrets.SSH_PRODUCTION_PORT }}
 

@@ -116,7 +116,7 @@ jobs:
           host: ${{ secrets.STAGING_HOST }}
           username: ${{ secrets.SSH_STAGING_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./deploy/staging/*,./docker-compose.yaml,./docker-compose.staging.yaml"
+          source: "./deploy/staging/Caddyfile,./docker-compose.yaml,./docker-compose.staging.yaml"
           target: ~/tpi-stockhub/
           port: ${{ secrets.SSH_STAGING_PORT }}
 
@@ -135,7 +135,6 @@ jobs:
 
             export BACKEND_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.backend_version || github.sha }}
             export FRONTEND_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.frontend_version || github.sha }}
-
 
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml down
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml pull
