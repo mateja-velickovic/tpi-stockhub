@@ -2,7 +2,7 @@
 	admin off
 }
 
-:80 {
+stockhub.pm2etml.ch {
 	encode gzip zstd
 
 	handle /api/* {
@@ -12,4 +12,8 @@
 	handle {
 		reverse_proxy web:5173
 	}
+}
+
+http://stockhub.pm2etml.ch {
+	redir https://stockhub.pm2etml.ch
 }
