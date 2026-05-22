@@ -1,6 +1,4 @@
 services:
-  database:
-
   api:
     image: ghcr.io/mateja-velickovic/stockhub-backend:${BACKEND_VERSION}
     build : null
@@ -8,7 +6,6 @@ services:
   web:
     image: ghcr.io/mateja-velickovic/stockhub-frontend:${FRONTEND_VERSION}
     build : null
-    ports: []
 
   caddy:
     image: caddy:2-alpine
@@ -17,7 +14,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
