@@ -3,8 +3,12 @@ name: StockHub | Deploy Production
 on:
   workflow_dispatch:
     inputs:
-      image_version:
-        description: "Indiquer la version des images (par défaut : commit SHA)"
+      backend_version:
+        description: "Indiquer la version de l'image du backend (ex: 1.0)"
+        required: true
+        type: string
+      frontend_version:
+        description: "Indiquer la version de l'image du frontend (ex: 1.0)"
         required: true
         type: string
 
