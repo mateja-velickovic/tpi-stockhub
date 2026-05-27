@@ -7,7 +7,7 @@ dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 
 const dbPort =
   process.env.NODE_ENV === 'staging' || process.env.VITE_ENV === 'staging'
-    ? 3307
+    ? parseInt(process.env.ST_DB_PORT)
     : parseInt(process.env.DB_PORT || '3306');
 
 const sequelize = new Sequelize(

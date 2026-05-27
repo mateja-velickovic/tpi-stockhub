@@ -15,12 +15,12 @@ services:
     build : null
     environment:
       DB_PORT: 3307
-      PORT: 3001
-    expose:
-      - "3001"
+      PORT: 3007
+    ports :
+      - "127.0.0.1:3007:3007"
       
   web:
     image: ghcr.io/mateja-velickovic/stockhub-frontend:${FRONTEND_VERSION}
     build : null
     environment:
-      VITE_API_PROXY_TARGET: http://api:3001
+      VITE_API_PROXY_TARGET: http://api:3007
