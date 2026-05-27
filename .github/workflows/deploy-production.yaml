@@ -110,11 +110,9 @@ jobs:
           username: ${{ secrets.SSH_PRODUCTION_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PRODUCTION_PORT }}
-          # Suppression du tar.gz pour faire du nettoyage
           # Récupération des images, arrêt des conteneurs, puis redémarrage avec les nouvelles images
           # Seed de la base de données - docker compose exec api node dist/seed.js
           script: |
-            rm *.tar.gz
             cd ~/prod-stockhub/
 
             export BACKEND_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.backend_version || github.sha }}

@@ -121,7 +121,6 @@ jobs:
           # Récupération des images, arrêt des conteneurs, puis redémarrage avec les nouvelles images
           # Seed de la base de données
           script: |
-            rm *.tar.gz
             cd ~/staging-stockhub/
 
             export BACKEND_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.backend_version || github.sha }}
