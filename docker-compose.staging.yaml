@@ -1,27 +1,19 @@
 services:
-  api:
-    image: ghcr.io/mateja-velickovic/stockhub-backend:${BACKEND_VERSION}
-    build : null
+  database:
+    ports:
+      - "3307:3307"
 
+  api:
+    image: ghcr.io/mateja-velickovic/stockhub-backend-staging:${BACKEND_VERSION}
+    build : null
+    environment:
+      DB_PORT: 3307
+      PORT: 3001
+    expose:
+      - "3001"
+      
   web:
     image: ghcr.io/mateja-velickovic/stockhub-frontend:${FRONTEND_VERSION}
     build : null
-
-  caddy:
-    image: caddy:2-alpine
-    container_name: caddy
-    restart: unless-stopped
-    ports:
-      - "80:80"
-    volumes:
-      - ./deploy/staging/Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
-    depends_on:
-      - web
-    networks:
-      - frontend_network
-
-volumes:
-  caddy_data:
-  caddy_config:
+    environment:
+      VITE_API_PROXY_TARGET: http://api:3001
