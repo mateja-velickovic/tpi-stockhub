@@ -22,5 +22,5 @@ services:
   web:
     image: ghcr.io/mateja-velickovic/stockhub-frontend:${FRONTEND_VERSION}
     build : null
-    environment:
-      VITE_API_PROXY_TARGET: http://api:3007
+    ports:
+      - "127.0.0.1:5173:80"
