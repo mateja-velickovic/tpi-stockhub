@@ -50,8 +50,8 @@ jobs:
           push: true
           file: ./backend/Dockerfile
           tags: |
-            ghcr.io/${{ github.actor }}/stockhub-backend-staging:${{ env.IMAGE_VERSION }}
-            ghcr.io/${{ github.actor }}/stockhub-backend-staging:latest
+            ghcr.io/${{ github.actor }}/stockhub-backend:${{ env.IMAGE_VERSION }}
+            ghcr.io/${{ github.actor }}/stockhub-backend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
