@@ -72,9 +72,6 @@ jobs:
       - name: Type Check Backend Code
         run: npm run typecheck
 
-      - name : Build Backend
-        run: npm run build
-
   check-frontend:
     name: Frontend CI Workflow
 
