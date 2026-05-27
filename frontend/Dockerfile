@@ -5,5 +5,5 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-EXPOSE 5173
-CMD ["npm", "run", "server", "--", "--host", "0.0.0.0", "--port", "5173"]
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html

@@ -12,7 +12,6 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 COPY --from=build /app/dist ./dist
 
-ARG EXPOSE_PORT=3000
-EXPOSE $EXPOSE_PORT
+EXPOSE 3000
 
 CMD ["npm", "run", "start"]
