@@ -130,7 +130,6 @@ async function seed() {
     await StockMovement.create({ type: 'OUT', quantity: 50, reason: 'Consommation mensuelle', productId: paper.id, userId: manager.id });
 
     console.log('Database seeded successfully!');
-    console.log('Users: admin@stockhub.ch / admin123, mateja@stockhub.ch / manager123');
     process.exit(0);
   } catch (error) {
     console.error('Seed failed:', error);
