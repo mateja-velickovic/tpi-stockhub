@@ -6,7 +6,7 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 COPY . .
-RUN npx tsc
+RUN npm run compile
 
 EXPOSE 3000
 CMD ["node", "dist/server.js"]
