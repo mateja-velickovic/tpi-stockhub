@@ -48,7 +48,7 @@ jobs:
         with:
           context: ./backend
           push: true
-          file: ./backend/Dockerfile.staging
+          file: ./backend/Dockerfile
           tags: |
             ghcr.io/${{ github.actor }}/stockhub-backend-staging:${{ env.IMAGE_VERSION }}
             ghcr.io/${{ github.actor }}/stockhub-backend-staging:latest
