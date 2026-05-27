@@ -48,10 +48,10 @@ jobs:
         with:
           context: ./backend
           push: true
-          file: ./backend/Dockerfile
+          file: ./backend/Dockerfile.staging
           tags: |
-            ghcr.io/${{ github.actor }}/stockhub-backend:${{ env.IMAGE_VERSION }}
-            ghcr.io/${{ github.actor }}/stockhub-backend:latest
+            ghcr.io/${{ github.actor }}/stockhub-backend-staging:${{ env.IMAGE_VERSION }}
+            ghcr.io/${{ github.actor }}/stockhub-backend-staging:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -101,23 +101,14 @@ jobs:
       - name: Cloning the repository
         uses: actions/checkout@v4
 
-      - name: Setup VPN
-        uses: ./.github/actions/vpn
-        with:
-          host: "${{ secrets.VPN_IP }}"
-          port: "443"
-          username: "${{ secrets.VPN_USERNAME }}"
-          password: "${{ secrets.VPN_PASSWORD }}"
-          ping_host: ${{ secrets.STAGING_HOST }}
-
       - name: Sending files to the staging server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.STAGING_HOST }}
           username: ${{ secrets.SSH_STAGING_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./deploy/staging/Caddyfile,./docker-compose.yaml,./docker-compose.staging.yaml"
-          target: ~/tpi-stockhub/
+          source: "./docker-compose.yaml,./docker-compose.staging.yaml"
+          target: ~/staging-stockhub/
           port: ${{ secrets.SSH_STAGING_PORT }}
 
       - name: Building the containers on the staging server
