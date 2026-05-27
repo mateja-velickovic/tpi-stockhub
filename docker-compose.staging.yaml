@@ -1,7 +1,8 @@
 services:
   database:
-    ports:
-      - "3307:3307"
+    command: --port=3307
+    expose:
+      - "3307"
 
   api:
     image: ghcr.io/mateja-velickovic/stockhub-backend-staging:${BACKEND_VERSION}
