@@ -5,8 +5,6 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "node --trace-warnings --watch --require ts-node/register src/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "lint": "eslint 'src/**/*.ts' 'tests/**/*.ts'",
