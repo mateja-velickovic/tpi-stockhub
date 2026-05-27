@@ -10,7 +10,8 @@
     "lint": "eslint 'src/**/*.ts' 'tests/**/*.ts'",
     "typecheck": "tsc --noEmit",
     "seed": "ts-node src/seed.ts",
-    "seed:prod": "node dist/seed.js"
+    "seed:prod": "node dist/seed.js",
+    "compile": "tsc"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
