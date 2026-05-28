@@ -111,5 +111,3 @@ jobs:
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml down
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml pull
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml up -d
-
-            docker compose exec -T api node dist/seed.js
