@@ -4,9 +4,9 @@ services:
 
   web:
     image: ghcr.io/mateja-velickovic/stockhub-frontend:${FRONTEND_VERSION}
-    
+
   caddy:
     ports:
       - "443:443"
     volumes:
-      - ./deploy/prod/Caddyfile:/etc/caddy/Caddyfile
+      - ./Caddy/Caddyfile:/etc/caddy/Caddyfile
