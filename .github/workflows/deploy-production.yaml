@@ -74,7 +74,6 @@ jobs:
         with:
           context: ./frontend
           push: true
-          target: production
           file: ./frontend/Dockerfile
           tags: |
             ghcr.io/${{ github.actor }}/stockhub-frontend:${{ env.FRONTEND_VERSION }}
