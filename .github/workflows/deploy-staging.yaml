@@ -5,15 +5,6 @@ on:
     workflows: ["StockHub | CI Workflow"]
     types: [completed]
   workflow_dispatch:
-    inputs:
-      backend_version:
-        description: "Indiquer la version de l'image du backend (ex: 1.0)"
-        required: true
-        type: string
-      frontend_version:
-        description: "Indiquer la version de l'image du frontend (ex: 1.0)"
-        required: true
-        type: string
 
 permissions:
   contents: read
@@ -27,9 +18,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set image version
-        run: echo "IMAGE_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.backend_version || github.sha }}" >> $GITHUB_ENV
-
       - name: Cloning the repository
         uses: actions/checkout@v4
 
@@ -50,7 +38,7 @@ jobs:
           push: true
           file: ./backend/Dockerfile
           tags: |
-            ghcr.io/${{ github.actor }}/stockhub-backend:${{ env.IMAGE_VERSION }}
+            ghcr.io/${{ github.actor }}/stockhub-backend:${{ github.sha }}
             ghcr.io/${{ github.actor }}/stockhub-backend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -62,9 +50,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set image version
-        run: echo "IMAGE_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.frontend_version || github.sha }}" >> $GITHUB_ENV
-        
       - name: Cloning the repository
         uses: actions/checkout@v4
 
@@ -85,7 +70,7 @@ jobs:
           push: true
           file: ./frontend/Dockerfile
           tags: |
-            ghcr.io/${{ github.actor }}/stockhub-frontend:${{ env.IMAGE_VERSION }}
+            ghcr.io/${{ github.actor }}/stockhub-frontend:${{ github.sha }}
             ghcr.io/${{ github.actor }}/stockhub-frontend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -122,9 +107,6 @@ jobs:
           # Seed de la base de données
           script: |
             cd ~/staging-stockhub/
-
-            export BACKEND_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.backend_version || github.sha }}
-            export FRONTEND_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.frontend_version || github.sha }}
 
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml down
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml pull
