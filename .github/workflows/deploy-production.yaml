@@ -98,8 +98,8 @@ jobs:
           host: ${{ secrets.PRODUCTION_HOST }}
           username: ${{ secrets.SSH_PRODUCTION_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./deploy/prod/Caddyfile,./docker-compose.*"
-          target: /home/${{ secrets.SSH_PRODUCTION_USERNAME }}/prod-stockhub
+          source: "./Caddy/Caddyfile,./docker-compose.*"
+          target: /home/${{ secrets.SSH_PRODUCTION_USERNAME }}/stockhub
           port: ${{ secrets.SSH_PRODUCTION_PORT }}
 
       - name: Building the containers on the production server
@@ -112,7 +112,7 @@ jobs:
           # Récupération des images, arrêt des conteneurs, puis redémarrage avec les nouvelles images
           # Seed de la base de données - docker compose exec api node dist/seed.js
           script: |
-            cd ~/prod-stockhub/
+            cd ~/stockhub/
 
             export BACKEND_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.backend_version || github.sha }}
             export FRONTEND_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.frontend_version || github.sha }}
@@ -120,7 +120,3 @@ jobs:
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml -f docker-compose.prod.yaml down
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml -f docker-compose.prod.yaml pull
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml -f docker-compose.prod.yaml up -d
-
-            docker compose exec api node dist/seed.js
-
-  # Ajouter le nettoyage des images inutilisées sur la machine distante
