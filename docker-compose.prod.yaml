@@ -20,3 +20,7 @@ services:
       - web
     networks:
       - frontend_network
+
+volumes:
+  caddy_data:
+  caddy_config:
