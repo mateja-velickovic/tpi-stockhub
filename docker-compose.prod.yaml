@@ -6,7 +6,17 @@ services:
     image: ghcr.io/mateja-velickovic/stockhub-frontend:${FRONTEND_VERSION}
 
   caddy:
+    image: caddy:2-alpine
+    container_name: caddy
+    restart: unless-stopped
     ports:
+      - "80:80"
       - "443:443"
     volumes:
       - ./Caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+    networks:
+      - frontend_network
