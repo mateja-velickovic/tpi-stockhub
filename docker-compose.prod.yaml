@@ -1,4 +1,10 @@
 services:
+  api:
+    image: ghcr.io/mateja-velickovic/stockhub-backend:${BACKEND_VERSION}
+
+  web:
+    image: ghcr.io/mateja-velickovic/stockhub-frontend:${FRONTEND_VERSION}
+    
   caddy:
     ports:
       - "443:443"
