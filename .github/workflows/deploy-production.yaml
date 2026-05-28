@@ -4,12 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       backend_version:
-        description: "Indiquer la version de l'image du backend (ex: 1.0)"
-        required: true
+        description: "Indiquer la version de l'image du backend (ex: v0.0.1)"
         type: string
       frontend_version:
-        description: "Indiquer la version de l'image du frontend (ex: 1.0)"
-        required: true
+        description: "Indiquer la version de l'image du frontend (ex: v0.0.1)"
         type: string
 
 permissions:
