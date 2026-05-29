@@ -104,10 +104,22 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_STAGING_PORT }}
           # Récupération des images, arrêt des conteneurs, puis redémarrage avec les nouvelles images
-          # Seed de la base de données
           script: |
             cd ~/stockhub/
 
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml down
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml pull
             docker compose -f docker-compose.yaml -f docker-compose.staging.yaml up -d
+
+      - name: Seed the database
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.STAGING_HOST }}
+          username: ${{ secrets.SSH_STAGING_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_STAGING_PORT }}
+          # Seed de la base de données
+          script: |
+            cd ~/stockhub/
+
+            docker compose exec api node dist/seed.js
