@@ -16,6 +16,10 @@ Sentry.init({
 app.use(createPinia());
 app.use(router);
 
-
+router.afterEach((to, from) => {
+  if (to.path !== from.path) {
+    Sentry.captureMessage(`Navigation: ${from.path} → ${to.path}`, 'info');
+  }
+});
 
 app.mount('#app');
