@@ -1,9 +1,12 @@
+import "./instrument";
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
 import routes from './routes';
 import { errorHandler } from './middleware/errorHandler.middleware';
+
+import * as Sentry from "@sentry/node";
 
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
@@ -16,6 +19,13 @@ app.use('/api', routes);
 
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+Sentry.setupExpressErrorHandler(app);
+
+app.use(function onError(err, req, res, next) {
+  res.statusCode = 500;
+  res.end(res.sentry + "\n");
 });
 
 app.use(errorHandler);
