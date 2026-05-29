@@ -1,4 +1,4 @@
-import "./instrument";
+import "./instrument.js";
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -19,9 +19,11 @@ app.use('/api', routes);
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
 app.get('/sentry-test', (_req, _res) => {
 throw new Error('Sentry test error');
 });
+
 Sentry.setupExpressErrorHandler(app)
 app.use(errorHandler);
 
