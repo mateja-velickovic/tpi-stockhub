@@ -97,7 +97,7 @@ jobs:
           host: ${{ secrets.PRODUCTION_HOST }}
           username: ${{ secrets.SSH_PRODUCTION_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./Caddy/Caddyfile,./docker-compose.*"
+          source: "./Caddy/Caddyfile,./docker-compose.yaml,./docker-compose.prod.yaml"
           target: /home/${{ secrets.SSH_PRODUCTION_USERNAME }}/stockhub
           port: ${{ secrets.SSH_PRODUCTION_PORT }}
 
