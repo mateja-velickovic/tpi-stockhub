@@ -10,7 +10,7 @@ stockhub.pm2etml.ch {
 	}
 
 	handle {
-		reverse_proxy web:5173
+		reverse_proxy web:80
 	}
 }
 
