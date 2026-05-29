@@ -53,7 +53,7 @@ Le fichier `.env` doit être basé sur le fichier `.env.example` à la racine du
  - `DB_NAME` - Nom de la base de données
  - `DB_USER` - Nom d'utilisateur MySQL
  - `DB_PASSWORD` - Mot de passe MySQL
- - `JWT_SECRET` - Secret JWT (à changer en prod)
+ - `JWT_SECRET` - Secret JWT
  - `JWT_EXPIRES_IN` - Durée de la validité des tokens (ex: 24h)
 
 
