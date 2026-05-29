@@ -23,10 +23,10 @@ app.get('/health', (_req, res) => {
 
 Sentry.setupExpressErrorHandler(app);
 
-app.use(function onError(err, req, res, next) {
-  res.statusCode = 500;
-  res.end(res.sentry + "\n");
+app.get("/debug-sentry", function mainHandler(req, res) {
+  throw new Error("My first Sentry error!");
 });
+
 
 app.use(errorHandler);
 
