@@ -115,9 +115,9 @@ jobs:
             export BACKEND_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.backend_version || github.sha }}
             export FRONTEND_VERSION=${{ github.event_name == 'workflow_dispatch' && inputs.frontend_version || github.sha }}
 
-            docker compose -f docker-compose.yaml -f docker-compose.staging.yaml -f docker-compose.prod.yaml down
-            docker compose -f docker-compose.yaml -f docker-compose.staging.yaml -f docker-compose.prod.yaml pull
-            docker compose -f docker-compose.yaml -f docker-compose.staging.yaml -f docker-compose.prod.yaml up -d
+            docker compose -f docker-compose.yaml -f docker-compose.prod.yaml down
+            docker compose -f docker-compose.yaml -f docker-compose.prod.yaml pull
+            docker compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d
 
       - name: Seed the database
         uses: appleboy/ssh-action@v0.1.7
