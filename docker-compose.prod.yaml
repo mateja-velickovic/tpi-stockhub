@@ -15,8 +15,6 @@ services:
 
   web:
     image: ghcr.io/mateja-velickovic/stockhub-frontend:${FRONTEND_VERSION}
-    ports:
-      - "127.0.0.1:5173:80"
 
   caddy:
     image: caddy:2-alpine
